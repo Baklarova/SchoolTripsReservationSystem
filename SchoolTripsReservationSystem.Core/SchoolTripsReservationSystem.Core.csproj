@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolTripsReservationSystem.Infrastructure\SchoolTripsReservationSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

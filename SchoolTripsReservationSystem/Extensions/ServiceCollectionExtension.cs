@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SchoolTripsReservationSystem.Data;
+using SchoolTripsReservationSystem.Infrastructure.Data;
 
 namespace Micrososoft.Extensions.DependencyInjection
 {

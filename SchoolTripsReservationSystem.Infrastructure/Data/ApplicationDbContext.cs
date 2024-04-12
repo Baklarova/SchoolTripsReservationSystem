@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SchoolTripsReservationSystem.Data
+namespace SchoolTripsReservationSystem.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
