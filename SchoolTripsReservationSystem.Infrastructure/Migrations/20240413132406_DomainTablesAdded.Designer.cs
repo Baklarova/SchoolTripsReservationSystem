@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolTripsReservationSystem.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SchoolTripsReservationSystem.Infrastructure.Data;
 namespace SchoolTripsReservationSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240413132406_DomainTablesAdded")]
+    partial class DomainTablesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,40 +139,6 @@ namespace SchoolTripsReservationSystem.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8e78f12-7602-407c-ac47-0cf4b77bcd0a",
-                            Email = "admin@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "admin@mail.com",
-                            NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOck3vwqHKz0tpC57kYgNwNSxnE0jiH7sxcLqGnjWvbmd+d2L+c+h6LprCHXm8Zfig==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "f0f904e1-eeeb-47ba-9c17-7ad0d4a9c93a",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@mail.com"
-                        },
-                        new
-                        {
-                            Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "204bc6fa-b97e-4cbc-be06-9acfd2fab7ac",
-                            Email = "teacher@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "teacher@mail.com",
-                            NormalizedUserName = "teacher@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIDLjTFfriPPNqZm3l8XN4lq+seePQlSMNXwgKBMAFvu+5IN6pLCXA9lDOf8QpYxaQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "47440ed0-8a68-496f-a5b2-3a44648401df",
-                            TwoFactorEnabled = false,
-                            UserName = "teacher@mail.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -298,35 +266,6 @@ namespace SchoolTripsReservationSystem.Infrastructure.Migrations
                     b.ToTable("Excursions");
 
                     b.HasComment("School excursion");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Magurata Cave, Baba Vida Fortress, Ledenika Cave, Historical Museum, Kozloduy",
-                            Name = "Northwest Bulgaria",
-                            PricePerAdult = 600.00m,
-                            PricePerStudent = 500.00m,
-                            RegionId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "The Seven Rila Lakes, Rila Monastery, Tsarska Bistrica, Historical Museum",
-                            Name = "The Seven Rila Lakes",
-                            PricePerAdult = 400.00m,
-                            PricePerStudent = 300.00m,
-                            RegionId = 4
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Nessebar, Begliktash, ethnographic museum, Bulgarka-nestinari village, Bastet's cave",
-                            Name = "Strandzha",
-                            PricePerAdult = 450.00m,
-                            PricePerStudent = 350.00m,
-                            RegionId = 3
-                        });
                 });
 
             modelBuilder.Entity("SchoolTripsReservationSystem.Infrastructure.Data.Models.Region", b =>
@@ -348,28 +287,6 @@ namespace SchoolTripsReservationSystem.Infrastructure.Migrations
                     b.ToTable("Regions");
 
                     b.HasComment("Geographic region");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            Name = "Northeast"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Name = "Northwest"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Southwest"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Southeast"
-                        });
                 });
 
             modelBuilder.Entity("SchoolTripsReservationSystem.Infrastructure.Data.Models.Reservation", b =>
@@ -427,32 +344,6 @@ namespace SchoolTripsReservationSystem.Infrastructure.Migrations
                     b.ToTable("Reservations");
 
                     b.HasComment("Reservation for school trip");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EscortAdultCount = 0,
-                            ExcursionId = 1,
-                            GroupLeaderId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                            SchoolId = 2,
-                            StartingDate = new DateTime(2024, 6, 15, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            StudentCount = 10,
-                            TeacherCount = 1,
-                            TransportId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            EscortAdultCount = 2,
-                            ExcursionId = 3,
-                            GroupLeaderId = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                            SchoolId = 1,
-                            StartingDate = new DateTime(2024, 5, 20, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            StudentCount = 44,
-                            TeacherCount = 3,
-                            TransportId = 3
-                        });
                 });
 
             modelBuilder.Entity("SchoolTripsReservationSystem.Infrastructure.Data.Models.School", b =>
@@ -495,24 +386,6 @@ namespace SchoolTripsReservationSystem.Infrastructure.Migrations
                     b.ToTable("Schools");
 
                     b.HasComment("School data");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Varna, 32 Kliment Ohridski str.",
-                            Eik = "000123654",
-                            Mol = "Ivan Ianov",
-                            Name = "St. Kliment Ohridski"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Sofia, 78 Vardar str.",
-                            Eik = "000987456",
-                            Mol = "Petar Petrov",
-                            Name = "St. st. Kiril and Metodi"
-                        });
                 });
 
             modelBuilder.Entity("SchoolTripsReservationSystem.Infrastructure.Data.Models.Transport", b =>
@@ -539,26 +412,6 @@ namespace SchoolTripsReservationSystem.Infrastructure.Migrations
                     b.ToTable("Transports");
 
                     b.HasComment("Transport for excursion");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Microbus",
-                            TransportCapacity = 18
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Autobus32",
-                            TransportCapacity = 32
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Autobus55",
-                            TransportCapacity = 55
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
