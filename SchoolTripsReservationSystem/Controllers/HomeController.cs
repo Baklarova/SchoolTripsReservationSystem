@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SchoolTripsReservationSystem.Core.Models.Home;
 using SchoolTripsReservationSystem.Models;
 using System.Diagnostics;
 
@@ -15,7 +16,8 @@ namespace SchoolTripsReservationSystem.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new HomeViewModel();
+            return View(model);
         }
 
         public IActionResult Privacy()
