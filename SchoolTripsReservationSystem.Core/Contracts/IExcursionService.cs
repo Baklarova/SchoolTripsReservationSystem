@@ -4,6 +4,6 @@ namespace SchoolTripsReservationSystem.Core.Contracts
 {
     public interface IExcursionService
     {
-        Task<IEnumerable<HomeViewModel>> OurNewOffers();
+        Task<IEnumerable<HomeViewModel>> OurNewOffersAsync();
     }
 }

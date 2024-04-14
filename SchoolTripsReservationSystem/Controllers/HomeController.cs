@@ -22,7 +22,7 @@ namespace SchoolTripsReservationSystem.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await excursionService.OurNewOffers();
+            var model = await excursionService.OurNewOffersAsync();
             return View(model);
         }
 

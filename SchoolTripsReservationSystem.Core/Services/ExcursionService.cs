@@ -16,7 +16,7 @@ namespace SchoolTripsReservationSystem.Core.Services
         }
 
 
-        public async Task<IEnumerable<HomeViewModel>> OurNewOffers()
+        public async Task<IEnumerable<HomeViewModel>> OurNewOffersAsync()
         {
             return await repository
                 .AllReadOnly<Excursion>()
