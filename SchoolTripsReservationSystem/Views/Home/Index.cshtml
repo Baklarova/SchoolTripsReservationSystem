@@ -1,10 +1,58 @@
-﻿@model HomeViewModel
+﻿@model IEnumerable<HomeViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
+    var excursions = Model.ToList();
 }
 
+@if (!excursions.Any())
+{
+    <div class="mt-4 p-5 bg-light">
+        <h1 class="display-4">Welcome to the School trip reservation system!</h1>
+        <p class="lead">
+            Вe are still developing our site. Expect us soon with amazing offers!
+            During this time you can enter details about your school.
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                <a asp-controller="School" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add School Details</a>
+            }
+        </p>
+    </div>
+}
+
+<div class="mb-5"></div>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="index-page-greeting">School Trips</h1>
+    <p class="index-page-greeting-p">Find our new offers</p>
+</div>
+
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @for (int i = 0; i < excursions.Count(); i++)
+        {
+            var excursion = excursions[i];
+            <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+                <img class="d-block w-100" style="width: 75vh"
+                     src="~/img/family-outing-421653_640.jpg" alt="@excursion.Name">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>
+                        <a class="btn btn-primary" asp-controller="Excursion" asp-action="Details"
+                           asp-route-id="@excursion.Id"> @excursion.Name</a>
+                    </h5>
+                </div>
+            </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>

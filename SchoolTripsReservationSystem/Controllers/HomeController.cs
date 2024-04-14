@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SchoolTripsReservationSystem.Core.Contracts;
 using SchoolTripsReservationSystem.Core.Models.Home;
 using SchoolTripsReservationSystem.Models;
 using System.Diagnostics;
@@ -9,14 +10,19 @@ namespace SchoolTripsReservationSystem.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IExcursionService excursionService;
+
+        public HomeController(
+            ILogger<HomeController> logger,
+            IExcursionService _excursionService)
         {
             _logger = logger;
+            excursionService = _excursionService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = new HomeViewModel();
+            var model = await excursionService.OurNewOffers();
             return View(model);
         }
 

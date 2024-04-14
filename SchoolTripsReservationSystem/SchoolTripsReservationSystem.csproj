@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SchoolTripsReservationSystem.Core\SchoolTripsReservationSystem.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>
