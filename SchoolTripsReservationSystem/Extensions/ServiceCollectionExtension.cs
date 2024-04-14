@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SchoolTripsReservationSystem.Core.Contracts;
+using SchoolTripsReservationSystem.Core.Services;
 using SchoolTripsReservationSystem.Infrastructure.Data;
+using SchoolTripsReservationSystem.Infrastructure.Data.Common;
 
 namespace Micrososoft.Extensions.DependencyInjection
 {
@@ -8,6 +11,7 @@ namespace Micrososoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IExcursionService, ExcursionService>();
             return services;
         }
 
@@ -16,6 +20,8 @@ namespace Micrososoft.Extensions.DependencyInjection
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddScoped<IRepository, Repository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
