@@ -1,5 +1,7 @@
-﻿using SchoolTripsReservationSystem.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using SchoolTripsReservationSystem.Core.Contracts;
 using SchoolTripsReservationSystem.Infrastructure.Data.Common;
+using SchoolTripsReservationSystem.Infrastructure.Data.Models;
 
 namespace SchoolTripsReservationSystem.Core.Services
 {
@@ -11,14 +13,25 @@ namespace SchoolTripsReservationSystem.Core.Services
         {
             repository = _repository;
         }
-        public Task CreateAsync(string name, string address, string eik, string mol)
+        public async Task CreateAsync(string name, string address, string eik, string mol)
         {
-            throw new NotImplementedException();
+            await repository.AddAsync(new School()
+            {
+                Name = name,
+                Address = address,
+                Eik = eik,
+                Mol = mol
+            });
+
+            await repository.SaveChangesAsync();
+                
         }
 
-        public Task<bool> SchoolWithEikExistsAsync(string eik)
+        public async Task<bool> SchoolWithEikExistsAsync(string eik)
         {
-            throw new NotImplementedException();
+            return await repository.AllReadOnly<School>()
+                .AnyAsync(s => s.Eik == eik);
+
         }
     }
 }
