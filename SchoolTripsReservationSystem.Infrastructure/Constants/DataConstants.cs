@@ -13,5 +13,11 @@
 
         public const int ExcursionDescriptionMaxLenght = 500;
         public const int ExcursionDescriptionMinLenght = 20;
+
+        public const int ExcursionDurationMaxNumber = 14;
+        public const int ExcursionDurationMinNumber = 1;
+
+        public const string ExcursionPriceMaxAmount = "9999";
+        public const string ExcursionPriceMinAmount = "0";
     }
 }

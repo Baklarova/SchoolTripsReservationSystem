@@ -1,12 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SchoolTripsReservationSystem.Core.Contracts;
 using SchoolTripsReservationSystem.Core.Models.Excursion;
+using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
 
 namespace SchoolTripsReservationSystem.Controllers
 {
     [Authorize]
     public class ExcursionController : Controller
     {
+        private readonly IExcursionService excursionService;
+
+        public ExcursionController(IExcursionService _excursionService)
+        {
+            excursionService = _excursionService;
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> All()
@@ -22,18 +31,35 @@ namespace SchoolTripsReservationSystem.Controllers
             return View(model);
         }
 
+        
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            
-            return View();
+            var model = new ExcursionFormModel()
+            {
+                Regions = await excursionService.AllRegionsAsync()
+            };
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(ExcursionFormModel model)
         {
+            if (await excursionService.RegionExistsAsync(model.RegionId) == false)
+            {
+                ModelState.AddModelError(nameof(model.RegionId), RegionNotExists);
+            }
 
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (ModelState.IsValid == false)
+            {
+                model.Regions = await excursionService.AllRegionsAsync();
+
+                return View(model);
+            }
+
+            int newExcursionId = await excursionService.CreateAsync(model);
+
+            return RedirectToAction(nameof(Details), new { id = newExcursionId });
         }
 
         [HttpGet]

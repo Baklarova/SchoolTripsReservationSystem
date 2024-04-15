@@ -5,7 +5,7 @@ using SchoolTripsReservationSystem.Infrastructure.Data.Models;
 
 namespace SchoolTripsReservationSystem.Core.Services
 {
-    internal class SchoolService : ISchoolService
+    public class SchoolService : ISchoolService
     {
         private readonly IRepository repository;
 

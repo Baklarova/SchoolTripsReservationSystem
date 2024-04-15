@@ -1,6 +1,6 @@
-﻿namespace SchoolTripsReservationSystem.Core.Models.Region
+﻿namespace SchoolTripsReservationSystem.Core.Models.Excursion
 {
-    public class RegionFormModel
+    public class ExcursionRegionServiseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

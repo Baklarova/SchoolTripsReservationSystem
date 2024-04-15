@@ -7,3 +7,53 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Name...">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration"></label>
+                <input asp-for="Duration" class="form-control" placeholder="Duration...">
+                <span asp-validation-for="Duration" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" rows="4" class="form-control" placeholder="You will visit..."></textarea>
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PricePerStudent"></label>
+                <input asp-for="PricePerStudent" class="form-control" placeholder="Price per student...">
+                <span asp-validation-for="PricePerStudent" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PricePerAdult"></label>
+                <input asp-for="PricePerAdult" class="form-control" placeholder="Price per adult...">
+                <span asp-validation-for="PricePerAdult" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegionId"></label>
+                <select asp-for="RegionId" class="form-control">
+                    @foreach (var region in Model.Regions)
+                    {
+                        <option value="@region.Id">@region.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="RegionId" class="small text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

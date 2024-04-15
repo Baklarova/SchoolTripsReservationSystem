@@ -12,6 +12,7 @@ namespace Micrososoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IExcursionService, ExcursionService>();
+            services.AddScoped<ISchoolService, SchoolService>();
             return services;
         }
 
