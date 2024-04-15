@@ -17,6 +17,10 @@ namespace SchoolTripsReservationSystem.Infrastructure.Data.Models
         [Comment("Excursion name")]
         public string Name { get; set; } = string.Empty;
 
+        [Required]
+        [Comment("Excursion duration in days")]
+        public int Duration { get; set; } 
+
         [MaxLength(ExcursionDescriptionMaxLenght)]
         [Comment("Excursion Description")]
         public string Description { get; set; } = string.Empty;
