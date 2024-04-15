@@ -1,4 +1,4 @@
-﻿@model ExcursionDetailsModel
+﻿@model ExcursionDetailsServiceModel
 
 @{
     ViewData["Title"] = "Excursion Details";
@@ -6,3 +6,37 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Name</u></p>
+            <p>Duration in days: <b>@Model.Duration</b></p>
+            <p>
+                Price Per Student:
+                <b>@String.Format("{0:f2}", Model.PricePerStudent) BGN</b>
+            </p>
+            <p>
+                Price Per Adult:
+                <b>@String.Format("{0:f2}", Model.PricePerAdult) BGN</b>
+            </p>
+            <p>What will you visit: @Model.Description</p>
+            <p>Region: <b>@Model.Region</b></p>
+            <div class="form-inline">
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    {
+                        <form class="ml-2" asp-controller="Excursion"
+                        asp-action="Book" asp-route-id="@Model.Id" method="post">
+                            <input class="btn btn-primary" type="submit" value="Book" />
+                        </form>
+                    }
+                }
+            </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -37,7 +37,11 @@ namespace SchoolTripsReservationSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var model = new ExcursionDetailsModel();
+            if (await excursionService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+            var model = await excursionService.ExcursionDetailsByIdAsync(id);
             return View(model);
         }
 

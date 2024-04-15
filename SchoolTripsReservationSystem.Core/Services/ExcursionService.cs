@@ -108,6 +108,29 @@ namespace SchoolTripsReservationSystem.Core.Services
             return excursion.Id;
         }
 
+        public async Task<ExcursionDetailsServiceModel> ExcursionDetailsByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Excursion>()
+                .Where(e => e.Id == id)
+                .Select(e => new ExcursionDetailsServiceModel()
+                {
+                    Id = e.Id, 
+                    Name = e.Name,
+                    Duration =  e.Duration,
+                    Description = e.Description,
+                    PricePerStudent = e.PricePerStudent,
+                    PricePerAdult= e.PricePerAdult,
+                    Region = e.Region.Name
+                })
+                .FirstAsync();
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await repository.AllReadOnly<Excursion>()
+                .AnyAsync(e => e.Id == id);
+        }
+
         public async Task<IEnumerable<HomeViewModel>> OurNewOffersAsync()
         {
             return await repository

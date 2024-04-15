@@ -23,5 +23,9 @@ namespace SchoolTripsReservationSystem.Core.Contracts
             int excursionPerPege = 1);
 
         Task<IEnumerable<string>> AllRegionsNamesAsync();
+
+        Task<bool> ExistsAsync(int id);
+
+        Task<ExcursionDetailsServiceModel> ExcursionDetailsByIdAsync(int id);
     }
 }
