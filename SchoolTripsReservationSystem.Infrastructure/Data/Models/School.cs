@@ -29,6 +29,7 @@ namespace SchoolTripsReservationSystem.Infrastructure.Data.Models
         public string Eik { get; set; } = string.Empty;
 
         [Required]
+        [MaxLength(NameMaxLenght)]
         [Comment("School director name/MOL")]
         public string Mol { get; set; } = string.Empty;
 

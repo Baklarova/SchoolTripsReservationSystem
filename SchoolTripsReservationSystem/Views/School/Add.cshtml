@@ -2,8 +2,44 @@
 
 
 @{
-    ViewBag["Title"] = "Add School";
+    ViewBag["Title"] = "Create a New School";
 }
 
 <h2 class="text-center">@ViewBag["Title"]</h2>
 <hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Add" method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Name" class="form-label-add-edit">Name</label>
+                <input asp-for="@Model.Name" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Address" class="form-label-add-edit">Address</label>
+                <textarea asp-for="@Model.Address" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Eik" class="form-label-add-edit">EIK</label>
+                <textarea asp-for="@Model.Eik" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="Eik" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Mol" class="form-label-add-edit">MOL</label>
+                <textarea asp-for="@Model.Mol" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="Mol" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
