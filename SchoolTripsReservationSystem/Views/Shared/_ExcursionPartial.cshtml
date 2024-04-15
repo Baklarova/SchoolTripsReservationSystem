@@ -1,0 +1,28 @@
+﻿@model ExcursionServiceModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>@Model.Name</h4>
+            <h6>Duration: <b>@Model.Duration</b></h6>
+            <h6>
+                Price Per Student:
+                <b>@String.Format("{0:f2}", Model.PricePerStudent) BGN</b>
+            </h6>
+            <br />
+            <a asp-controller="Excursion" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+            @if (this.User?.Identity?.IsAuthenticated ?? false)
+            {
+                <a asp-controller="Excursion" asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-warning">Edit</a>
+                <a asp-controller="Excursion" asp-action="Delete" asp-route-id="@Model.Id"
+                   class="btn btn-danger">Delete</a>
+                <a asp-controller="Excursion" asp-action="Book" asp-route-id="@Model.Id"
+                   class="btn btn-danger">Book</a>
+                <p></p>
+            }
+        </div>
+    </div>
+</div>
+

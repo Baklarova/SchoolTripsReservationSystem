@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolTripsReservationSystem.Core.Contracts;
+using SchoolTripsReservationSystem.Core.Enumetations;
 using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Home;
-using SchoolTripsReservationSystem.Core.Models.Region;
 using SchoolTripsReservationSystem.Infrastructure.Data.Common;
 using SchoolTripsReservationSystem.Infrastructure.Data.Models;
 
@@ -17,6 +17,60 @@ namespace SchoolTripsReservationSystem.Core.Services
             repository = _repository;
         }
 
+        public async Task<ExcursionQueryServiceModel> AllAsync(
+            string? region = null,
+            string? searchTerm = null, 
+            ExcursionSorting sorting = ExcursionSorting.Newest, 
+            int currentPage = 1, 
+            int excursionPerPege = 1)
+        {
+            var excursionsToShow = repository.AllReadOnly<Excursion>();
+
+            if (region != null)
+            {
+                excursionsToShow = excursionsToShow
+                    .Where(e => e.Region.Name == region);
+            }
+
+            if (searchTerm != null)
+            {
+                string normalizedSearchTerm = searchTerm.ToLower();
+                excursionsToShow = excursionsToShow
+                    .Where(e => (e.Name.ToLower().Contains(normalizedSearchTerm) ||
+                                  e.Description.ToLower().Contains(normalizedSearchTerm)));
+            }
+
+            excursionsToShow = sorting switch 
+            { 
+                ExcursionSorting.Price => excursionsToShow
+                    .OrderBy(e => e.PricePerStudent),
+                ExcursionSorting.Duration => excursionsToShow
+                    .OrderByDescending(e => e.Duration),
+                _ => excursionsToShow
+                    .OrderByDescending(e => e.Id)
+            };
+
+            var excursions = await excursionsToShow
+                .Skip((currentPage - 1) * excursionPerPege)
+                .Take(excursionPerPege)
+                .Select(e => new ExcursionServiceModel() 
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Duration = e.Duration,
+                    PricePerStudent = e.PricePerStudent
+                })
+                .ToListAsync();
+
+            int totalExcursions = await excursionsToShow.CountAsync();
+
+            return new ExcursionQueryServiceModel()
+            {
+                Excursions = excursions,
+                TotalExcursionCount = totalExcursions
+            };
+        }
+
         public async Task<IEnumerable<ExcursionRegionServiseModel>> AllRegionsAsync()
         {
             return await repository.AllReadOnly<Region>()
@@ -25,6 +79,14 @@ namespace SchoolTripsReservationSystem.Core.Services
                     Id = r.Id,
                     Name = r.Name
                 })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> AllRegionsNamesAsync()
+        {
+            return await repository.AllReadOnly<Region>()
+                .Select(r => r.Name)
+                .Distinct()
                 .ToListAsync();
         }
 

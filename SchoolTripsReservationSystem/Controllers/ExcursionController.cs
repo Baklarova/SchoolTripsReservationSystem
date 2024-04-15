@@ -18,10 +18,20 @@ namespace SchoolTripsReservationSystem.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllExcursionsModel query)
         {
-            var model = new AllExcursionsModel();
-            return View(model);
+            var model = await excursionService.AllAsync(
+                query.Region,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                query.ExcursionsPerPage);
+
+            query.TotalExcursionsCount = model.TotalExcursionCount;
+            query.Excursions = model.Excursions;
+            query.Regions = await excursionService.AllRegionsNamesAsync();
+
+            return View(query);
         }
 
         [HttpGet]
