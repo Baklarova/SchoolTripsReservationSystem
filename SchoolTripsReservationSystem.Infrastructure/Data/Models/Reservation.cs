@@ -46,7 +46,7 @@ namespace SchoolTripsReservationSystem.Infrastructure.Data.Models
         public string? GroupLeaderId { get; set; }
 
         [ForeignKey(nameof(GroupLeaderId))]
-        public IdentityUser GroupLeader { get; set; } = null!;
+        public ApplicationUser GroupLeader { get; set; } = null!;
 
         [Required]
         [Comment("Count of the teachers, without group leader")]

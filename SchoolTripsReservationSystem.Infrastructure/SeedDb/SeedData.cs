@@ -6,8 +6,8 @@ namespace SchoolTripsReservationSystem.Infrastructure.SeedDb
 {
     internal class SeedData
     {
-        public IdentityUser AdminUser { get; set; }
-        public IdentityUser TeacherUser { get; set; }
+        public ApplicationUser AdminUser { get; set; }
+        public ApplicationUser TeacherUser { get; set; }
 
         public Region NorthwestRegion { get; set; }
         public Region NortheastRegion { get; set; }
@@ -41,9 +41,9 @@ namespace SchoolTripsReservationSystem.Infrastructure.SeedDb
 
         private void SeedUsers()
         {
-            var hasher = new PasswordHasher<IdentityUser>();
+            var hasher = new PasswordHasher<ApplicationUser>();
 
-            AdminUser = new IdentityUser()
+            AdminUser = new ApplicationUser()
             {
                 Id = "dea12856-c198-4129-b3f3-b893d8395082",
                 UserName = "admin@mail.com",
@@ -55,7 +55,7 @@ namespace SchoolTripsReservationSystem.Infrastructure.SeedDb
             AdminUser.PasswordHash =
                  hasher.HashPassword(AdminUser, "admin123");
 
-            TeacherUser = new IdentityUser()
+            TeacherUser = new ApplicationUser()
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "teacher@mail.com",

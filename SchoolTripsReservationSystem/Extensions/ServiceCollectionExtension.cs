@@ -4,6 +4,7 @@ using SchoolTripsReservationSystem.Core.Contracts;
 using SchoolTripsReservationSystem.Core.Services;
 using SchoolTripsReservationSystem.Infrastructure.Data;
 using SchoolTripsReservationSystem.Infrastructure.Data.Common;
+using SchoolTripsReservationSystem.Infrastructure.Data.Models;
 
 namespace Micrososoft.Extensions.DependencyInjection
 {
@@ -33,7 +34,7 @@ namespace Micrososoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<ApplicationUser>(options =>
                 { 
                     options.SignIn.RequireConfirmedAccount = false; 
                     options.Password.RequireNonAlphanumeric = false;

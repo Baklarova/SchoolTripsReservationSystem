@@ -30,5 +30,11 @@
         public const int AdultsMixPax = 0;
 
         public const string DateFormat = "dd.MM.yyyy HH:mm:ss";
-    }
+
+		public const int UserFirstNameMaxLenght = 20;
+		public const int UserFirstNameMixLenght = 1;
+
+		public const int UserLastNameMaxLenght = 20;
+		public const int UserLastNameMixLenght = 3;
+	}
 }
