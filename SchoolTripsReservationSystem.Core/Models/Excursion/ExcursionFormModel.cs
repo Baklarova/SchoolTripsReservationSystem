@@ -1,4 +1,5 @@
-﻿using SchoolTripsReservationSystem.Core.Models.Region;
+﻿using SchoolTripsReservationSystem.Core.Contracts;
+using SchoolTripsReservationSystem.Core.Models.Region;
 using System.ComponentModel.DataAnnotations;
 using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
 using static SchoolTripsReservationSystem.Infrastructure.Constants.DataConstants;
@@ -6,7 +7,7 @@ using static SchoolTripsReservationSystem.Infrastructure.Constants.DataConstants
 
 namespace SchoolTripsReservationSystem.Core.Models.Excursion
 {
-    public class ExcursionFormModel
+    public class ExcursionFormModel : IExcursionModel
     {
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(NameMaxLenght, MinimumLength = NameMinLenght, ErrorMessage = LenghtMessage)]

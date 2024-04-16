@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SchoolTripsReservationSystem.Core.Contracts;
+using System.ComponentModel.DataAnnotations;
 using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
 using static SchoolTripsReservationSystem.Infrastructure.Constants.DataConstants;
 
 namespace SchoolTripsReservationSystem.Core.Models.Excursion
 {
-    public class ExcursionServiceModel
+    public class ExcursionServiceModel : IExcursionModel
     {
 
         public int Id { get; set; }
@@ -17,7 +18,11 @@ namespace SchoolTripsReservationSystem.Core.Models.Excursion
         [Range(ExcursionDurationMinNumber, ExcursionDurationMaxNumber, ErrorMessage = DurationMassage)]
         public int Duration { get; set; }
 
-        [Required(ErrorMessage = RequiredMessage)]
+		[Required(ErrorMessage = RequiredMessage)]
+		[StringLength(ExcursionDescriptionMaxLenght, MinimumLength = ExcursionDescriptionMinLenght, ErrorMessage = LenghtMessage)]
+		public string Description { get; set; } = null!;
+
+		[Required(ErrorMessage = RequiredMessage)]
         [Range(typeof(decimal), ExcursionPriceMinAmount, ExcursionPriceMaxAmount, ConvertValueInInvariantCulture = true, ErrorMessage = PriceMassage)]
         [Display(Name = "Price per studrnt")]
         public decimal PricePerStudent { get; set; }

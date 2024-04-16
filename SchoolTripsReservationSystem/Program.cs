@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using Micrososoft.Extensions.DependencyInjection;
 using SchoolTripsReservationSystem.ModelBinders;
 
@@ -15,6 +17,7 @@ namespace SchoolTripsReservationSystem
             builder.Services.AddControllersWithViews(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
             builder.Services.AddApplicationServices();
@@ -41,9 +44,17 @@ namespace SchoolTripsReservationSystem
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapDefaultControllerRoute();
-            app.MapRazorPages();
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "Excursion Details",
+                    pattern: "/Excursion/Details/{id}/{information}",
+                    defaults: new { Controller = "Excursion", Action = "Details"}
+                    );
+				endpoints.MapDefaultControllerRoute();
+				endpoints.MapRazorPages();
+			});
+            
             app.Run();
         }
     }

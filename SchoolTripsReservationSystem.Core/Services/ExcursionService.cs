@@ -59,6 +59,7 @@ namespace SchoolTripsReservationSystem.Core.Services
                     Id = e.Id,
                     Name = e.Name,
                     Duration = e.Duration,
+                    Description = e.Description,
                     PricePerStudent = e.PricePerStudent
                 })
                 .ToListAsync();

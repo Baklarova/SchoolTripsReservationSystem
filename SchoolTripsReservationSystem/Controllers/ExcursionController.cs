@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolTripsReservationSystem.Core.Contracts;
+using SchoolTripsReservationSystem.Core.Extansions;
 using SchoolTripsReservationSystem.Core.Models.Excursion;
 using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
 
 namespace SchoolTripsReservationSystem.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class ExcursionController : Controller
     {
         private readonly IExcursionService excursionService;
@@ -35,14 +36,21 @@ namespace SchoolTripsReservationSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string information)
         {
             if (await excursionService.ExistsAsync(id) == false)
             {
                 return BadRequest();
             }
+
             var model = await excursionService.ExcursionDetailsByIdAsync(id);
-            return View(model);
+
+            if (information != model.GetInformation())
+            {
+				return BadRequest();
+			}
+
+			return View(model);
         }
 
 
@@ -73,7 +81,7 @@ namespace SchoolTripsReservationSystem.Controllers
 
             int newExcursionId = await excursionService.CreateAsync(model);
 
-            return RedirectToAction(nameof(Details), new { id = newExcursionId });
+            return RedirectToAction(nameof(Details), new { id = newExcursionId, information = model.GetInformation() });
         }
 
         [HttpGet]
@@ -110,7 +118,7 @@ namespace SchoolTripsReservationSystem.Controllers
 
             await excursionService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(Details), new { id });
+            return RedirectToAction(nameof(Details), new { id, information = model.GetInformation() });
         }
 
         [HttpGet]

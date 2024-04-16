@@ -6,10 +6,7 @@ namespace SchoolTripsReservationSystem.Core.Models.Excursion
 {
     public class ExcursionDetailsServiceModel : ExcursionServiceModel
     {
-        [Required(ErrorMessage = RequiredMessage)]
-        [StringLength(ExcursionDescriptionMaxLenght, MinimumLength = ExcursionDescriptionMinLenght, ErrorMessage = LenghtMessage)]
-        public string Description { get; set; } = string.Empty;
-
+       
         [Required(ErrorMessage = RequiredMessage)]
         [Range(typeof(decimal), ExcursionPriceMinAmount, ExcursionPriceMaxAmount, ConvertValueInInvariantCulture = true, ErrorMessage = PriceMassage)]
         [Display(Name = "Price per adult")]

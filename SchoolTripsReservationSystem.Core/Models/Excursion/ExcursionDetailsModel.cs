@@ -1,6 +1,8 @@
-﻿namespace SchoolTripsReservationSystem.Core.Models.Excursion
+﻿using SchoolTripsReservationSystem.Core.Contracts;
+
+namespace SchoolTripsReservationSystem.Core.Models.Excursion
 {
-    public class ExcursionDetailsModel
+    public class ExcursionDetailsModel : IExcursionModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
