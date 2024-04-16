@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SchoolTripsReservationSystem.Core.Contracts;
-using SchoolTripsReservationSystem.Core.Models.Home;
-using SchoolTripsReservationSystem.Models;
-using System.Diagnostics;
 
 namespace SchoolTripsReservationSystem.Controllers
 {
