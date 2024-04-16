@@ -21,6 +21,7 @@ namespace SchoolTripsReservationSystem.ModelBinders
                     stringValue = stringValue.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 
                     result = Convert.ToDecimal(stringValue, CultureInfo.CurrentCulture);
+                    success = true;
                 }
                 catch (FormatException ex)
                 {
