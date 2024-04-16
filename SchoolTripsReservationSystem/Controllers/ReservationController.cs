@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolTripsReservationSystem.Core.Models.Reservation;
+using SchoolTripsReservationSystem.Extensions;
 
 namespace SchoolTripsReservationSystem.Controllers
 {
@@ -9,8 +10,8 @@ namespace SchoolTripsReservationSystem.Controllers
     {
         public async Task<IActionResult> My()
         {
-            var model = new MyReservationModel();
-            return View(model);
+            var userId = User.Id();
+            return View();
         }
 
         public async Task<IActionResult> Detail(int id)

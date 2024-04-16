@@ -79,15 +79,38 @@ namespace SchoolTripsReservationSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new ExcursionFormModel();
+            if (await excursionService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await excursionService.GetExcursionFormModelByIdAsync(id);
+
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, ExcursionFormModel model)
         {
+            if (await excursionService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
 
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (await excursionService.RegionExistsAsync(model.RegionId) == false)
+            {
+                ModelState.AddModelError(nameof(model.RegionId), RegionNotExists);
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                model.Regions = await excursionService.AllRegionsAsync();
+                return View(model);
+            }
+
+            await excursionService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         [HttpGet]

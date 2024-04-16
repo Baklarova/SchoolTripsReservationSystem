@@ -27,5 +27,9 @@ namespace SchoolTripsReservationSystem.Core.Contracts
         Task<bool> ExistsAsync(int id);
 
         Task<ExcursionDetailsServiceModel> ExcursionDetailsByIdAsync(int id);
+
+        Task EditAsync(int excursionId, ExcursionFormModel model);
+
+        Task<ExcursionFormModel?> GetExcursionFormModelByIdAsync(int id);
     }
 }

@@ -108,6 +108,23 @@ namespace SchoolTripsReservationSystem.Core.Services
             return excursion.Id;
         }
 
+        public async Task EditAsync(int excursionId, ExcursionFormModel model)
+        {
+            var excursion = await repository.GetByIdAsync<Excursion>(excursionId);
+
+            if (excursion != null)
+            {
+                excursion.Name = model.Name;    
+                excursion.Duration = model.Duration;
+                excursion.Description = model.Description;
+                excursion.RegionId = model.RegionId;
+                excursion.PricePerStudent = model.PricePerStudent;
+                excursion.PricePerAdult = model.PricePerAdult;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
         public async Task<ExcursionDetailsServiceModel> ExcursionDetailsByIdAsync(int id)
         {
             return await repository.AllReadOnly<Excursion>()
@@ -129,6 +146,29 @@ namespace SchoolTripsReservationSystem.Core.Services
         {
             return await repository.AllReadOnly<Excursion>()
                 .AnyAsync(e => e.Id == id);
+        }
+
+        public async Task<ExcursionFormModel?> GetExcursionFormModelByIdAsync(int id)
+        {
+            var excursion = await repository.AllReadOnly<Excursion>()
+                .Where(e => e.Id == id)
+                .Select(e => new ExcursionFormModel()
+                {
+                    Name = e.Name,
+                    Duration = e.Duration,
+                    Description = e.Description,
+                    PricePerStudent = e.PricePerStudent,
+                    PricePerAdult = e.PricePerAdult,
+                    RegionId = e.RegionId
+                })
+                .FirstOrDefaultAsync();
+
+            if (excursion != null)
+            {
+                excursion.Regions = await AllRegionsAsync();
+            }
+
+            return excursion;
         }
 
         public async Task<IEnumerable<HomeViewModel>> OurNewOffersAsync()
