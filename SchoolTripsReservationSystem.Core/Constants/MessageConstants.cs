@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
-
-namespace SchoolTripsReservationSystem.Core.Constants
+﻿namespace SchoolTripsReservationSystem.Core.Constants
 {
     public static class MessageConstants
     {
@@ -16,5 +9,9 @@ namespace SchoolTripsReservationSystem.Core.Constants
         public const string DurationMassage = "Duration must be between {1} and {2} days";
         public const string PriceMassage = "Price can not be a negative number";
         public const string RegionNotExists = "Region does not exists.";
+        public const string TransportCapasityMassage = "Transport capasity must be between {1} and {2} seats";
+        public const string StudentsMassage = "Students must be between {1} and {2} pax";
+        public const string AdultMassage = "Adults must be between {1} and {2} pax";
+        public const string TeacherMassage = "Teachers must be between {1} and {2} pax";
     }
 }

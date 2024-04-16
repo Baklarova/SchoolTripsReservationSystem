@@ -1,7 +1,7 @@
 ﻿using SchoolTripsReservationSystem.Core.Enumetations;
 using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Home;
-using SchoolTripsReservationSystem.Core.Models.Region;
+using SchoolTripsReservationSystem.Core.Models.Reservation;
 
 namespace SchoolTripsReservationSystem.Core.Contracts
 {
@@ -31,5 +31,8 @@ namespace SchoolTripsReservationSystem.Core.Contracts
         Task EditAsync(int excursionId, ExcursionFormModel model);
 
         Task<ExcursionFormModel?> GetExcursionFormModelByIdAsync(int id);
+
+        Task DeleteAsync(int excursionId);
+
     }
 }

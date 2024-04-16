@@ -39,5 +39,15 @@ namespace SchoolTripsReservationSystem.Infrastructure.Data.Common
         {
             return await DbSet<T>().FindAsync(id);
         }
+
+        public async Task DeleteAsync<T>(object id) where T : class
+        {
+            T? entity = await GetByIdAsync<T>(id);
+
+            if (entity != null)
+            {
+                DbSet<T>().Remove(entity);
+            }
+        }
     }
 }

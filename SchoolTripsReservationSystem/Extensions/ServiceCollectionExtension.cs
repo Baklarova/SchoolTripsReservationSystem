@@ -13,6 +13,7 @@ namespace Micrososoft.Extensions.DependencyInjection
         {
             services.AddScoped<IExcursionService, ExcursionService>();
             services.AddScoped<ISchoolService, SchoolService>();
+            services.AddScoped<IReservationService, ReservationService>();
             return services;
         }
 

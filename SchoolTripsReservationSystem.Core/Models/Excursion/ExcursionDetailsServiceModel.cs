@@ -15,7 +15,6 @@ namespace SchoolTripsReservationSystem.Core.Models.Excursion
         [Display(Name = "Price per adult")]
         public decimal PricePerAdult { get; set; } 
 
-
         public string Region { get; set; } = string.Empty;
     }
 }

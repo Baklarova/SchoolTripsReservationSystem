@@ -19,5 +19,16 @@
 
         public const string ExcursionPriceMaxAmount = "9999";
         public const string ExcursionPriceMinAmount = "0";
+
+        public const int TransportCapasityMaxNumber = 55;
+        public const int TransportCapasityMinNumber = 14;
+
+        public const int StudentsMaxPax = 50;
+        public const int StudentsMixPax = 10;
+
+        public const int AdultsMaxPax = 5;
+        public const int AdultsMixPax = 0;
+
+        public const string DateFormat = "dd.MM.yyyy HH:mm:ss";
     }
 }

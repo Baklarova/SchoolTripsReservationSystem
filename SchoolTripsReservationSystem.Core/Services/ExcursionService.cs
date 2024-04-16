@@ -3,6 +3,7 @@ using SchoolTripsReservationSystem.Core.Contracts;
 using SchoolTripsReservationSystem.Core.Enumetations;
 using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Home;
+using SchoolTripsReservationSystem.Core.Models.Reservation;
 using SchoolTripsReservationSystem.Infrastructure.Data.Common;
 using SchoolTripsReservationSystem.Infrastructure.Data.Models;
 
@@ -108,6 +109,12 @@ namespace SchoolTripsReservationSystem.Core.Services
             return excursion.Id;
         }
 
+        public async Task DeleteAsync(int excursionId)
+        {
+            await repository.DeleteAsync<Excursion>(excursionId);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task EditAsync(int excursionId, ExcursionFormModel model)
         {
             var excursion = await repository.GetByIdAsync<Excursion>(excursionId);
@@ -194,5 +201,6 @@ namespace SchoolTripsReservationSystem.Core.Services
             return await repository.AllReadOnly<Region>()
                 .AnyAsync(r => r.Id == regionId);
         }
+
     }
 }

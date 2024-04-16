@@ -1,12 +1,9 @@
 ﻿using SchoolTripsReservationSystem.Core.Models.Excursion;
-using System.ComponentModel.DataAnnotations;
 
 namespace SchoolTripsReservationSystem.Core.Models.Reservation
 {
-    public class MyReservationModel
+    public class ReservationExcursionServiceModel : ExcursionFormModel
     {
-        
-
-
+        public int Id { get; set; }
     }
 }

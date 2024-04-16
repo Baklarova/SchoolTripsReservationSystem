@@ -6,7 +6,10 @@
     @if (this.User?.Identity?.IsAuthenticated ?? false)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Excursion" asp-action="My">My Excursions</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="Make">Book Excursion</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="My">My Excursions</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Excursion" asp-action="Add">New Excursion</a>

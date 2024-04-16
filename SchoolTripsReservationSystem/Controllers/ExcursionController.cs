@@ -116,13 +116,34 @@ namespace SchoolTripsReservationSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var model = new ExcursionDetailsModel();
+            if (await excursionService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var excursion = await excursionService.ExcursionDetailsByIdAsync(id);
+
+            var model = new ExcursionDetailsModel()
+            { 
+                Id = excursion.Id,
+                Name = excursion.Name,
+                Duration = excursion.Duration,
+                Description = excursion.Description
+            };
+
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(ExcursionDetailsModel model)
         {
+
+            if (await excursionService.ExistsAsync(model.Id) == false)
+            {
+                return BadRequest();
+            }
+
+            await excursionService.DeleteAsync(model.Id);
 
             return RedirectToAction(nameof(All));
         }

@@ -1,0 +1,23 @@
+﻿@model ReservationServiceModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>@Model.Excursion</h4>
+            <h6>Departure Date: <b>@Model.StartingDate</b></h6>
+            <h6>Students: <b>@Model.StudentCount</b></h6>
+            <h6>Adults: <b>@Model.EscortAdultCount</b></h6>
+            <h6>Teachers: <b>@Model.TeacherCount</b></h6>
+            <h6>Transport: <b>@Model.Transport</b></h6>
+            <h6>School: <b>@Model.School</b></h6>
+            <h6>
+                Total Price:
+                <b>@String.Format("{0:f2}", Model.TotalPrice) BGN</b>
+            </h6>
+            <br />
+                <a asp-controller="Resrevation" asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-warning">Edit</a>
+            
+        </div>
+    </div>
+</div>
