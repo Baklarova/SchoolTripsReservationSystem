@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using SchoolTripsReservationSystem.Core.Contracts;
+using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Reservation;
+using SchoolTripsReservationSystem.Core.Services;
 using SchoolTripsReservationSystem.Extensions;
 using SchoolTripsReservationSystem.Infrastructure.Data.Models;
 using System.Globalization;
@@ -31,10 +33,16 @@ namespace SchoolTripsReservationSystem.Controllers
             return View(model);
         }
 
-        
-        public async Task<IActionResult> Detail(int id)
+        [HttpGet]
+        public async Task<IActionResult> All()
         {
-            var model = new ReservationDetailsModel();
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            IEnumerable<ReservationAllModel> model;
+            model = await reservationService.AllReservaionAsync();
             return View(model);
         }
 
@@ -88,6 +96,66 @@ namespace SchoolTripsReservationSystem.Controllers
             int newReservationId = await reservationService.CreateAsync(model, userId);
 
             return RedirectToAction(nameof(My), new { id = newReservationId});
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (await reservationService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await reservationService.HasUserWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            var model = await reservationService.GetReservationFormModelByIdAsync(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, ReservationFormModel model)
+        {
+            if (await reservationService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await reservationService.HasUserWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
+            if (await reservationService.ExcursionExistsAsync(model.ExcursionId) == false)
+            {
+                ModelState.AddModelError(nameof(model.ExcursionId), "Excursion does not exist");
+            }
+
+            if (await reservationService.TransportExistsAsync(model.TransportId) == false)
+            {
+                ModelState.AddModelError(nameof(model.TransportId), "Transport does not exist");
+            }
+
+            if (await reservationService.SchoolExistsAsync(model.SchoolId) == false)
+            {
+                ModelState.AddModelError(nameof(model.SchoolId), "School does not exist");
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                model.Excursions = await reservationService.AllExcursionsAsync();
+                model.Transports = await reservationService.AllTransportsAsync();
+                model.Schools = await reservationService.AllSchoolsAsync();
+
+                return View(model);
+            }
+
+            await reservationService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(My), new { id });
         }
     }
 }

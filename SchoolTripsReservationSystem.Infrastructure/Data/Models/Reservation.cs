@@ -51,5 +51,8 @@ namespace SchoolTripsReservationSystem.Infrastructure.Data.Models
         [Required]
         [Comment("Count of the teachers, without group leader")]
         public int TeacherCount { get; set; }
+
+        [Comment("Is reservation approved by administrator")]
+        public bool IsApproved { get; set; }
     }
 }

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ReservationAllModel>
+
+
+@{
+    ViewData["Title"] = "All Reservation";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if (!Model.Any())
+{
+	<h2 class="text-center">You have no reservation yet</h2>
+}
+
+<div class="row">
+	@foreach (var reservation in Model)
+	{
+		<partial name="_AllReservationPartial" model="@reservation" />
+	}
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolTripsReservationSystem.Core.Contracts;
+using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Reservation;
 using SchoolTripsReservationSystem.Infrastructure.Data.Common;
 using SchoolTripsReservationSystem.Infrastructure.Data.Models;
@@ -28,6 +29,25 @@ namespace SchoolTripsReservationSystem.Core.Services
                     PricePerAdult = e.PricePerAdult,
                     RegionId = e.RegionId
                 })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ReservationAllModel>> AllReservaionAsync()
+        {
+            return await repository.AllReadOnly<Reservation>()
+                .Select(r => new ReservationAllModel()
+                {
+                    Id = r.Id,
+                    Excursion = r.Excursion.Name,
+                    StartingDate = r.StartingDate.ToString(),
+                    StudentCount = r.StudentCount,
+                    EscortAdultCount = r.EscortAdultCount,
+                    Transport = r.Transport.Name,
+                    School = r.School.Name,
+                    GroupLeaderName = $"{r.GroupLeader.FirstName} {r.GroupLeader.LastName}",
+                    TeacherCount = r.TeacherCount,
+                    TotalPrice = (r.StudentCount * r.Excursion.PricePerStudent) + (r.EscortAdultCount * r.Excursion.PricePerAdult)
+				})
                 .ToListAsync();
         }
 
@@ -98,10 +118,67 @@ namespace SchoolTripsReservationSystem.Core.Services
             return reservation.Id;
         }
 
+        public async Task EditAsync(int reservationId, ReservationFormModel model)
+        {
+            var reservation = await repository.GetByIdAsync<Reservation>(reservationId);
+
+            if (reservation != null)
+            {
+                reservation.ExcursionId = model.ExcursionId;
+                reservation.StartingDate = DateTime.Now;
+                reservation.StudentCount = model.StudentCount;
+                reservation.EscortAdultCount = model.EscortAdultCount;
+                reservation.TransportId = model.TransportId;
+                reservation.SchoolId = model.SchoolId;
+                reservation.TeacherCount = model.TeacherCount;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
         public async Task<bool> ExcursionExistsAsync(int excursionId)
         {
             return await repository.AllReadOnly<Excursion>()
                 .AnyAsync(e => e.Id == excursionId);
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await repository.AllReadOnly<Reservation>()
+                .AnyAsync(e => e.Id == id);
+        }
+
+        public async Task<ReservationFormModel?> GetReservationFormModelByIdAsync(int id)
+        {
+            DateTime departurDate = DateTime.Now;
+            var reservation = await repository.AllReadOnly<Reservation>()
+                .Where(r => r.Id == id)
+                .Select(r => new ReservationFormModel()
+                {
+                    ExcursionId = r.Id,
+                    StartingDate = r.StartingDate.ToString(),
+                    StudentCount = r.StudentCount,
+                    EscortAdultCount = r.EscortAdultCount,
+                    TransportId = r.TransportId,
+                    SchoolId = r.SchoolId,
+                    TeacherCount = r.TeacherCount
+                })
+                .FirstOrDefaultAsync();
+
+            if (reservation != null)
+            {
+                reservation.Excursions = await AllExcursionsAsync();
+                reservation.Transports = await AllTransportsAsync();
+                reservation.Schools = await AllSchoolsAsync();
+            }
+
+            return reservation;
+        }
+
+        public async Task<bool> HasUserWithIdAsync(int reservationId, string userId)
+        {
+            return await repository.AllReadOnly<Reservation>()
+                .AnyAsync(r => r.Id == reservationId && r.GroupLeaderId == userId);
         }
 
         public async Task<bool> SchoolExistsAsync(int schoolId)

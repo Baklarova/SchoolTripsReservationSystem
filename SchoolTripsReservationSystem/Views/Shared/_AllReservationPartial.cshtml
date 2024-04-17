@@ -1,4 +1,4 @@
-﻿@model ReservationServiceModel
+﻿@model ReservationAllModel
 
 <div class="col-md-4">
     <div class="card mb-3">
@@ -9,6 +9,7 @@
             <h6>Adults: <b>@Model.EscortAdultCount</b></h6>
             <h6>Teachers: <b>@Model.TeacherCount</b></h6>
             <h6>Transport: <b>@Model.Transport</b></h6>
+            <h6>Group Leader: <b>@Model.GroupLeaderName</b></h6>
             <h6>School: <b>@Model.School</b></h6>
             <h6>
                 Total Price:
@@ -17,7 +18,7 @@
             <br />
             <a asp-controller="Reservation" asp-action="Edit" asp-route-id="@Model.Id"
                class="btn btn-success">Edit</a>
-            <p></p>            
+            <p></p>
         </div>
     </div>
 </div>

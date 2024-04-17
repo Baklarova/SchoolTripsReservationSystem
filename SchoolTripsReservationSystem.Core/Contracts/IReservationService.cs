@@ -20,5 +20,15 @@ namespace SchoolTripsReservationSystem.Core.Contracts
         Task<bool> SchoolExistsAsync(int schoolId);
 
         Task<IEnumerable<ReservationServiceModel>> AllReservaionByUserId(string userId);
+
+        Task<IEnumerable<ReservationAllModel>> AllReservaionAsync();
+
+        Task<bool> ExistsAsync(int id);
+
+        Task EditAsync(int reservationId, ReservationFormModel model);
+
+        Task<ReservationFormModel?> GetReservationFormModelByIdAsync(int id);
+
+        Task<bool> HasUserWithIdAsync(int reservationId, string userId);
     }
 }

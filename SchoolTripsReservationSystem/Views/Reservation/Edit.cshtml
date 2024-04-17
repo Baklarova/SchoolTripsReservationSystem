@@ -1,0 +1,74 @@
+﻿@model ReservationFormModel
+
+
+@{
+    ViewData["Title"] = "Edit reservation";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="ExcursionId"></label>
+                <select asp-for="ExcursionId" class="form-control">
+                    @foreach (var excursion in Model.Excursions)
+                    {
+                        <option value="@excursion.Id">@excursion.Name>@excursion.Duration</option>
+                    }
+                </select>
+                <span asp-validation-for="ExcursionId" class="small text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.StartingDate" class="form-label-add-edit">Starting Date</label>
+                <input asp-for="@Model.StartingDate" class="form-control" value="@DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")" />
+                <span asp-validation-for="@Model.StartingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentCount"></label>
+                <input asp-for="StudentCount" class="form-control" placeholder="Student count...">
+                <span asp-validation-for="StudentCount" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EscortAdultCount"></label>
+                <input asp-for="EscortAdultCount" class="form-control" placeholder="Adult Count...">
+                <span asp-validation-for="EscortAdultCount" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportId"></label>
+                <select asp-for="TransportId" class="form-control">
+                    @foreach (var transport in Model.Transports)
+                    {
+                        <option value="@transport.Id">@transport.Name>@transport.TransportCapacity</option>
+                    }
+                </select>
+                <span asp-validation-for="TransportId" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SchoolId"></label>
+                <select asp-for="SchoolId" class="form-control">
+                    @foreach (var school in Model.Schools)
+                    {
+                        <option value="@school.Id">@school.Name>@school.Address>@school.Eik</option>
+                    }
+                </select>
+                <span asp-validation-for="SchoolId" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeacherCount"></label>
+                <textarea asp-for="TeacherCount" rows="4" class="form-control" placeholder="Teachers count..."></textarea>
+                <span asp-validation-for="TeacherCount" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
