@@ -2,7 +2,7 @@
 
 namespace SchoolTripsReservationSystem.Areas.Admin.Controllers
 {
-    public class HomeController : AdminBaseControler
+    public class HomeController : AdminBaseController
     {
         public IActionResult DashBoard()
         {

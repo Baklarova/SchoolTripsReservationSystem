@@ -30,5 +30,6 @@ namespace SchoolTripsReservationSystem.Core.Contracts
         Task<ReservationFormModel?> GetReservationFormModelByIdAsync(int id);
 
         Task<bool> HasUserWithIdAsync(int reservationId, string userId);
+
     }
 }

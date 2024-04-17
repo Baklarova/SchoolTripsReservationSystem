@@ -6,7 +6,7 @@ namespace SchoolTripsReservationSystem.Areas.Admin.Controllers
 {
     [Area(AdminAreaName)]
     [Authorize(Roles = AdminRole)]
-    public class AdminBaseControler : Controller
+    public class AdminBaseController : Controller
     {
         
     }
