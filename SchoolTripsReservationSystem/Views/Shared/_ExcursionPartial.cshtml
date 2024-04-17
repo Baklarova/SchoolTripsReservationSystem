@@ -1,4 +1,5 @@
-﻿@model ExcursionServiceModel
+﻿@using SchoolTripsReservationSystem.Extensions
+@model ExcursionServiceModel
 
 <div class="col-md-4">
     <div class="card mb-3">
@@ -14,10 +15,13 @@
                  asp-route-information="@Model.GetInformation()" class="btn btn-success">Details</a>
             @if (this.User?.Identity?.IsAuthenticated ?? false)
             {
-                <a asp-controller="Excursion" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Edit</a>
-                <a asp-controller="Excursion" asp-action="Delete" asp-route-id="@Model.Id"
-                   class="btn btn-danger">Delete</a>
+                @if (User.IsAdmin())
+                {
+                    <a asp-controller="Excursion" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+                    <a asp-controller="Excursion" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                }                
                 <a asp-controller="Reservation" asp-action="Make" asp-route-id="@Model.Id"
                    class="btn btn-success">Book</a>
                 <p></p>

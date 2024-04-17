@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolTripsReservationSystem.Core.Contracts;
 using SchoolTripsReservationSystem.Core.Extansions;
 using SchoolTripsReservationSystem.Core.Models.Excursion;
+using SchoolTripsReservationSystem.Extensions;
 using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
 
 namespace SchoolTripsReservationSystem.Controllers
 {
-	[Authorize]
+    [Authorize]
     public class ExcursionController : Controller
     {
         private readonly IExcursionService excursionService;
@@ -19,7 +20,7 @@ namespace SchoolTripsReservationSystem.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All([FromQuery]AllExcursionsModel query)
+        public async Task<IActionResult> All([FromQuery] AllExcursionsModel query)
         {
             var model = await excursionService.AllAsync(
                 query.Region,
@@ -47,26 +48,39 @@ namespace SchoolTripsReservationSystem.Controllers
 
             if (information != model.GetInformation())
             {
-				return BadRequest();
-			}
+                return BadRequest();
+            }
 
-			return View(model);
+            return View(model);
         }
 
 
         [HttpGet]
+        
         public async Task<IActionResult> Add()
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = new ExcursionFormModel()
             {
                 Regions = await excursionService.AllRegionsAsync()
             };
+
+           
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(ExcursionFormModel model)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             if (await excursionService.RegionExistsAsync(model.RegionId) == false)
             {
                 ModelState.AddModelError(nameof(model.RegionId), RegionNotExists);
@@ -92,6 +106,11 @@ namespace SchoolTripsReservationSystem.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var model = await excursionService.GetExcursionFormModelByIdAsync(id);
 
             return View(model);
@@ -103,6 +122,11 @@ namespace SchoolTripsReservationSystem.Controllers
             if (await excursionService.ExistsAsync(id) == false)
             {
                 return BadRequest();
+            }
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             if (await excursionService.RegionExistsAsync(model.RegionId) == false)
@@ -129,6 +153,11 @@ namespace SchoolTripsReservationSystem.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+
             var excursion = await excursionService.ExcursionDetailsByIdAsync(id);
 
             var model = new ExcursionDetailsModel()
@@ -149,6 +178,11 @@ namespace SchoolTripsReservationSystem.Controllers
             if (await excursionService.ExistsAsync(model.Id) == false)
             {
                 return BadRequest();
+            }
+
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             await excursionService.DeleteAsync(model.Id);

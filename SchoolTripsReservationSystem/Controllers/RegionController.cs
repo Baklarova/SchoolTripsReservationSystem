@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolTripsReservationSystem.Core.Models.Region;
+using static SchoolTripsReservationSystem.Core.Constants.RoleConstants;
 
 namespace SchoolTripsReservationSystem.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = AdminRole)]
     public class RegionController : Controller
     {
         [HttpGet]
