@@ -47,9 +47,11 @@ namespace SchoolTripsReservationSystem.Infrastructure.SeedDb
             {
                 Id = "dea12856-c198-4129-b3f3-b893d8395082",
                 UserName = "admin@mail.com",
-                NormalizedUserName = "admin@mail.com",
+                NormalizedUserName = "ADMIN@MAIL.COM",
                 Email = "admin@mail.com",
-                NormalizedEmail = "admin@mail.com"
+                NormalizedEmail = "ADMIN@MAIL.COM",
+                FirstName = "Admin",
+                LastName = "Admin"
             };
 
             AdminUser.PasswordHash =
@@ -59,9 +61,11 @@ namespace SchoolTripsReservationSystem.Infrastructure.SeedDb
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "teacher@mail.com",
-                NormalizedUserName = "teacher@mail.com",
+                NormalizedUserName = "TEACHER@MAIL.COM",
                 Email = "teacher@mail.com",
-                NormalizedEmail = "teacher@mail.com"
+                NormalizedEmail = "TEACHER@MAIL.COM",
+                FirstName = "Ivan",
+                LastName = "Ivanov"
             };
 
             TeacherUser.PasswordHash =

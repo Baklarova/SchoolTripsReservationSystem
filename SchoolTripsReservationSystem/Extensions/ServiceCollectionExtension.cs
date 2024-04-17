@@ -35,10 +35,11 @@ namespace Micrososoft.Extensions.DependencyInjection
         {
             services
                 .AddDefaultIdentity<ApplicationUser>(options =>
-                { 
-                    options.SignIn.RequireConfirmedAccount = false; 
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             return services;
