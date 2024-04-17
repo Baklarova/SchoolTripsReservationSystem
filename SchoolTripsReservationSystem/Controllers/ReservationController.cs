@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using SchoolTripsReservationSystem.Core.Contracts;
-using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Reservation;
-using SchoolTripsReservationSystem.Core.Services;
 using SchoolTripsReservationSystem.Extensions;
-using SchoolTripsReservationSystem.Infrastructure.Data.Models;
-using System.Globalization;
-using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
-using static SchoolTripsReservationSystem.Infrastructure.Constants.DataConstants;
 
 namespace SchoolTripsReservationSystem.Controllers
 {
@@ -62,12 +55,6 @@ namespace SchoolTripsReservationSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Make(ReservationFormModel model)
         {
-            DateTime departurDate = DateTime.Now;
-
-            if (!DateTime.TryParseExact(model.StartingDate, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out departurDate))
-            {
-                ModelState.AddModelError(nameof(model.StartingDate), "Invalid date! Format must be: dd.MM.yyyy HH:mm:ss");
-            }
 
             if (await reservationService.ExcursionExistsAsync(model.ExcursionId) == false)
             {

@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolTripsReservationSystem.Core.Contracts;
 using SchoolTripsReservationSystem.Core.Models.Admin;
-using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Reservation;
 using SchoolTripsReservationSystem.Infrastructure.Data.Common;
 using SchoolTripsReservationSystem.Infrastructure.Data.Models;
+using System.Data;
+using System.Globalization;
 
 namespace SchoolTripsReservationSystem.Core.Services
 {
@@ -113,6 +114,12 @@ namespace SchoolTripsReservationSystem.Core.Services
         public async Task<int> CreateAsync(ReservationFormModel model, string userId)
         {
             DateTime departurDate = DateTime.Now;
+
+            if (!DateTime.TryParseExact(model.StartingDate, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out departurDate))
+            {
+                throw new ArgumentException("Invalid date! Format must be: dd.MM.yyyy HH:mm:ss");
+                
+            }
             Reservation reservation = new Reservation()
             {
                 ExcursionId = model.ExcursionId,
@@ -135,10 +142,18 @@ namespace SchoolTripsReservationSystem.Core.Services
         {
             var reservation = await repository.GetByIdAsync<Reservation>(reservationId);
 
+            DateTime departurDate = DateTime.Now;
+
+            if (!DateTime.TryParseExact(model.StartingDate, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out departurDate))
+            {
+                throw new ArgumentException("Invalid date! Format must be: dd.MM.yyyy HH:mm:ss");
+
+            }
+
             if (reservation != null)
             {
                 reservation.ExcursionId = model.ExcursionId;
-                reservation.StartingDate = DateTime.Now;
+                reservation.StartingDate = departurDate;
                 reservation.StudentCount = model.StudentCount;
                 reservation.EscortAdultCount = model.EscortAdultCount;
                 reservation.TransportId = model.TransportId;
@@ -163,7 +178,7 @@ namespace SchoolTripsReservationSystem.Core.Services
 
         public async Task<ReservationFormModel?> GetReservationFormModelByIdAsync(int id)
         {
-            DateTime departurDate = DateTime.Now;
+            
             var reservation = await repository.AllReadOnly<Reservation>()
                 .Where(r => r.Id == id)
                 .Select(r => new ReservationFormModel()
