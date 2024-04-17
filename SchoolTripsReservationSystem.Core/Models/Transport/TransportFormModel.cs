@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static SchoolTripsReservationSystem.Core.Constants.MessageConstants;
 using static SchoolTripsReservationSystem.Infrastructure.Constants.DataConstants;
 
