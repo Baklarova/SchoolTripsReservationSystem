@@ -10,7 +10,7 @@ namespace SchoolTripsReservationSystem
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -54,11 +54,17 @@ namespace SchoolTripsReservationSystem
                     pattern: "/Excursion/Details/{id}/{information}",
                     defaults: new { Controller = "Excursion", Action = "Details"}
                     );
-				endpoints.MapDefaultControllerRoute();
-				endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    );
+                endpoints.MapDefaultControllerRoute();               
+                endpoints.MapRazorPages();
 			});
+
+            await app.CreateAdminRoleAsync();
             
-            app.Run();
+            await app.RunAsync();
         }
     }
 }
