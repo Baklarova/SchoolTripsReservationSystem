@@ -155,7 +155,7 @@ namespace SchoolTripsReservationSystem.Controllers
 
             await reservationService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(My), new { id });
+            return RedirectToAction(nameof(All), new { id });
         }
     }
 }

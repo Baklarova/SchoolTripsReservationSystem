@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolTripsReservationSystem.Core.Contracts;
+using SchoolTripsReservationSystem.Core.Models.Admin;
 using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Reservation;
 using SchoolTripsReservationSystem.Infrastructure.Data.Common;
@@ -97,6 +98,18 @@ namespace SchoolTripsReservationSystem.Core.Services
                .ToListAsync();
         }
 
+        public async Task ApproveReservationAsync(int reservationId)
+        {
+            var reservation = await repository.GetByIdAsync<Reservation>(reservationId);
+
+            if (reservation != null && reservation.IsApproved == false)
+            {
+                reservation.IsApproved = true;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
         public async Task<int> CreateAsync(ReservationFormModel model, string userId)
         {
             DateTime departurDate = DateTime.Now;
@@ -173,6 +186,20 @@ namespace SchoolTripsReservationSystem.Core.Services
             }
 
             return reservation;
+        }
+
+        public async Task<IEnumerable<ApproveReservationViewModel>> GetUnApprovedAsync()
+        {
+            return await repository.AllReadOnly<Reservation>()
+                .Where(r => r.IsApproved == false)
+                .Select(r => new ApproveReservationViewModel()
+                {
+                    ReservationId = r.Id,
+                    ExcursionName = r.Excursion.Name,
+                    StartingDate = r.StartingDate.ToString(),
+                    StudentCount = r.StudentCount
+                })
+                .ToListAsync();
         }
 
         public async Task<bool> HasUserWithIdAsync(int reservationId, string userId)

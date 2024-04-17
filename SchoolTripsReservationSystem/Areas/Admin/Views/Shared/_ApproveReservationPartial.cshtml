@@ -1,0 +1,16 @@
+﻿@model ApproveReservationViewModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>@Model.ExcursionName</h4>
+            <h6>Departure Date: <b>@Model.StartingDate</b></h6>
+            <h6>Students: <b>@Model.StudentCount</b></h6>
+            <br />
+            <form class="input-group-sm" asp-controller="Reservation"
+                  asp-area="Admin" asp-action="Approve" asp-route-reservationId="@Model.ReservationId" method="post">
+                <input class="btn btn-success" type="submit" value="Approve" />
+            </form>
+        </div>
+    </div>
+</div>

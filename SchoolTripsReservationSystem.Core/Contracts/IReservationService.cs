@@ -1,4 +1,5 @@
-﻿using SchoolTripsReservationSystem.Core.Models.Excursion;
+﻿using SchoolTripsReservationSystem.Core.Models.Admin;
+using SchoolTripsReservationSystem.Core.Models.Excursion;
 using SchoolTripsReservationSystem.Core.Models.Reservation;
 
 namespace SchoolTripsReservationSystem.Core.Contracts
@@ -30,6 +31,10 @@ namespace SchoolTripsReservationSystem.Core.Contracts
         Task<ReservationFormModel?> GetReservationFormModelByIdAsync(int id);
 
         Task<bool> HasUserWithIdAsync(int reservationId, string userId);
+
+        Task ApproveReservationAsync(int reservationId);
+
+        Task<IEnumerable<ApproveReservationViewModel>> GetUnApprovedAsync();
 
     }
 }

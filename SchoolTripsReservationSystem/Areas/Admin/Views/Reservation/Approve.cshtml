@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ApproveReservationViewModel>
+
+
+@{
+	ViewData["Title"] = "Approve";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<hr />
+<h4<=>Reservations to approve</>
+@if (!Model.Any())
+{
+	<h2 class="text-center">You have no reservations to approve!</h2>
+}
+
+<div class="row">
+	@foreach (var reservation in Model)
+	{
+			@await Html.PartialAsync("~/Areas/Admin/Views/Shared/_ApproveReservationPartial.cshtml", reservation)
+	}
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
