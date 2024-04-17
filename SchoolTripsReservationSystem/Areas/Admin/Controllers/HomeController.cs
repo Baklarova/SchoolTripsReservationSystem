@@ -2,13 +2,16 @@
 
 namespace SchoolTripsReservationSystem.Areas.Admin.Controllers
 {
-    public class AdminHomeController : AdminBaseControler
+    public class HomeController : AdminBaseControler
     {
         public IActionResult DashBoard()
         {
             return View();
         }
-
+        public async Task<IActionResult> ForReview()
+        {
+            return View();
+        }
         
     }
 }

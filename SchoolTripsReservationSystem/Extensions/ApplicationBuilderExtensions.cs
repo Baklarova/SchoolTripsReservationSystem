@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SchoolTripsReservationSystem.Infrastructure.Data.Models;
-using static SchoolTripsReservationSystem.Core.Constants.RoleConstants;
+using static SchoolTripsReservationSystem.Core.Constants.AdministratorConstants;
 
 namespace Microsoft.AspNetCore.Builder
 {

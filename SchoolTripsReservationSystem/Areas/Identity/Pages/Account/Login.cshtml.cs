@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SchoolTripsReservationSystem.Infrastructure.Data.Models;
 using System.ComponentModel.DataAnnotations;
-using static SchoolTripsReservationSystem.Core.Constants.RoleConstants;
+using static SchoolTripsReservationSystem.Core.Constants.AdministratorConstants;
 
 namespace SchoolTripsReservationSystem.Areas.Identity.Pages.Account
 {

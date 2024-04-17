@@ -35,6 +35,7 @@ namespace SchoolTripsReservationSystem.Core.Services
         {
             return await repository.AllReadOnly<Reservation>()
                 .Where(r => r.GroupLeaderId == userId)
+                .Where(r => r.IsApproved)
                 .Select(r => new ReservationServiceModel() 
                 { 
                     Id = r.Id,

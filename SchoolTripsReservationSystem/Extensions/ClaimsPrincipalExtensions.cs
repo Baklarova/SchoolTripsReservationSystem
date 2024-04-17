@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using static SchoolTripsReservationSystem.Core.Constants.RoleConstants;
+using static SchoolTripsReservationSystem.Core.Constants.AdministratorConstants;
 
 namespace SchoolTripsReservationSystem.Extensions
 {
